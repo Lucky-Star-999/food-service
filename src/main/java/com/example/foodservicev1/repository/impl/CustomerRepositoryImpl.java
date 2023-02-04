@@ -21,4 +21,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> findAll() {
         return jdbcTemplate.query("SELECT * FROM CUSTOMER", new CustomerRowMapper());
     }
+
+    @Override
+    public int save(Customer customer) {
+        try {
+            return jdbcTemplate.update("INSERT INTO CUSTOMER ( Email, Password, Fullname, Phone )" +
+                            "VALUES ( ?, ?, ?, ? )",
+                    new Object[]{customer.getEmail(), customer.getPassword(), customer.getFullname(), customer.getPhone()});
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }

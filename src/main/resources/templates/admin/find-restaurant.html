@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Customers</title>
+    <title>Admin - Manage Restaurant</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -17,31 +17,34 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Admin - Manage Customers</h1>
+        <h1>Admin - Manage Restaurant</h1>
         <div class="mt-5">
             <table id="example" class="table table-striped table-hover align-middle" style="width:100%">
                 <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Full name</th>
-                    <th>Phone</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Restaurant ID</th>
+                        <th>Restaurant name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <!--<th>Image Link</th>-->
+                        <!--<th>Address</th>-->
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="customer: ${customers}">
-                    <td th:utext="${customer.email}"></td>
-                    <td th:utext="${customer.password}"></td>
-                    <td th:utext="${customer.fullname}"></td>
-                    <td th:utext="${customer.phone}"></td>
-                    <td><button class="btn btn-success">Edit</button></td>
-                </tr>
+                    <tr th:each="restaurant: ${restaurants}">
+                        <td th:utext="${restaurant.id}"></td>
+                        <td th:utext="${restaurant.name}"></td>
+                        <td th:utext="${restaurant.email}"></td>
+                        <td th:utext="${restaurant.password}"></td>
+                        <!--<td th:utext="${restaurant.imageLink}"></td>-->
+                        <!--<td th:utext="${restaurant.address}"></td>-->
+                        <td><button class="btn btn-success">Detail/Edit</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="mt-5">
-            <a href="/api/admin/create-customer" type="button" class="btn btn-success">Add Customer</a>
             <a href="/api/admin" type="button" class="btn btn-secondary">Back</a>
         </div>
     </div>
@@ -49,7 +52,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-
+    
     <script>
         $(document).ready(function () {
             $('#example').DataTable();

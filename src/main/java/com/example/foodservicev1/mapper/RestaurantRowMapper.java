@@ -13,10 +13,10 @@ public class RestaurantRowMapper implements RowMapper<Restaurant> {
     public Restaurant mapRow(ResultSet rs, int rowNum) throws SQLException {
         Restaurant restaurant = new Restaurant();
         restaurant.setId(rs.getString("Id"));
+        restaurant.setName(rs.getString("Name"));
         restaurant.setEmail(rs.getString("Email"));
         restaurant.setPassword(rs.getString("Password"));
-        restaurant.setName(rs.getString("Name"));
-        restaurant.setImageLink(rs.getString("Phone"));
+        restaurant.setImageLink(rs.getString("ImageLink"));
         restaurant.setAddress(rs.getString("Address"));
         return restaurant;
     }

@@ -8,4 +8,8 @@ import java.util.List;
 @Repository
 public interface AdminRepository {
     public List<Admin> findAll();
+    public Admin findByEmail(String email);
+    public int save(Admin admin);
+    public int update(Admin admin);
+    public int delete(String email);
 }

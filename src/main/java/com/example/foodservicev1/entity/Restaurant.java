@@ -11,9 +11,9 @@ import lombok.Setter;
 @Getter
 public class Restaurant {
     private String id;
+    private String name;
     private String email;
     private String password;
-    private String name;
     private String imageLink;
     private String address;
 }

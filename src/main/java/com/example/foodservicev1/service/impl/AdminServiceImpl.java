@@ -17,4 +17,24 @@ public class AdminServiceImpl implements AdminService {
     public List<Admin> findAll() {
         return adminRepository.findAll();
     }
+
+    @Override
+    public Admin findByEmail(String email) {
+        return adminRepository.findByEmail(email);
+    }
+
+    @Override
+    public int save(Admin admin) {
+        return adminRepository.save(admin);
+    }
+
+    @Override
+    public int update(Admin admin) {
+        return adminRepository.update(admin);
+    }
+
+    @Override
+    public int delete(String email) {
+        return adminRepository.delete(email);
+    }
 }

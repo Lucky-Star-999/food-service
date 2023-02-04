@@ -35,12 +35,15 @@
                         <td th:utext="${admin.password}"></td>
                         <td th:utext="${admin.fullname}"></td>
                         <td th:utext="${admin.phone}"></td>
-                        <td><button class="btn btn-success">Edit</button></td>
+                        <td>
+                            <a th:href="@{|/api/admin/update-admin/${admin.email}}|" class="btn btn-success">Edit</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="mt-5">
+            <a href="/api/admin/create-admin" type="button" class="btn btn-success">Add Admin</a>
             <a href="/api/admin" type="button" class="btn btn-secondary">Back</a>
         </div>
     </div>
