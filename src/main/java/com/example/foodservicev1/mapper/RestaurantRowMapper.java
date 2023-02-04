@@ -12,7 +12,7 @@ public class RestaurantRowMapper implements RowMapper<Restaurant> {
     @Override
     public Restaurant mapRow(ResultSet rs, int rowNum) throws SQLException {
         Restaurant restaurant = new Restaurant();
-        restaurant.setId(rs.getString("Id"));
+        restaurant.setUsername(rs.getString("Username"));
         restaurant.setName(rs.getString("Name"));
         restaurant.setEmail(rs.getString("Email"));
         restaurant.setPassword(rs.getString("Password"));

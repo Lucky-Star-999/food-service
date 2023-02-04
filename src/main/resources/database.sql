@@ -34,32 +34,52 @@ SELECT 1 FROM DUAL;
 
 -- Create table Restaurant and add some data
 CREATE TABLE RESTAURANT (
-	Id VARCHAR2(100) PRIMARY KEY,
+	Username VARCHAR2(100) PRIMARY KEY,
 	Name NVARCHAR2(200),
 	Email NVARCHAR2(100),
 	Password VARCHAR2(100),
-	ImageLink NVARCHAR2(100),
+	ImageLink VARCHAR2(2000),
 	Address NVARCHAR2(300)
 );
 
 INSERT ALL
-    INTO RESTAURANT ( Id, Name, Email, Password, ImageLink, Address )
+    INTO RESTAURANT ( Username, Name, Email, Password, ImageLink, Address )
 		VALUES (
-			'ebb0a197-5c9b-4aa4-b00d-237a549d65e7', 'Luck Restaurant', 'theboost1305@gmail.com', '123456',
+			'luckrestaurant', 'Luck Restaurant', 'theboost1305@gmail.com', '123456',
 			'https://cdn-icons-png.flaticon.com/512/5052/5052310.png',
 			'Khu phố 6, phường Linh Trung, thành phố Thủ Đức, Thành phố Hồ Chí Minh'
 		)
-	INTO RESTAURANT ( Id, Name, Email, Password, ImageLink, Address )
+	INTO RESTAURANT ( Username, Name, Email, Password, ImageLink, Address )
 		VALUES (
-			'96a1b1ab-4575-427e-a4e3-f77705547b2b', 'Restaurant 2', 'admin2@gmail.com', '123456',
+			'restaurant2', 'Restaurant 2', 'admin2@gmail.com', '123456',
 			'',
 			'Khu phố 6, phường Linh Trung, thành phố Thủ Đức, Thành phố Hồ Chí Minh'
 		)
 SELECT 1 FROM DUAL;
 
+-- Create table Food and add some data
+CREATE TABLE FOOD (
+	Id VARCHAR2(200) PRIMARY KEY,
+	RestaurantUsername VARCHAR2(100),
+	Name NVARCHAR2(200),
+	Price NUMBER,
+	Quantity NUMBER,
+	ImageLink VARCHAR2(2000)
+);
 
+INSERT ALL
+    INTO FOOD ( Id, RestaurantUsername, Name, Price, Quantity, ImageLink )
+		VALUES (
+			'b170bcaa-8008-4889-aa8c-886950a2ce22', 'luckrestaurant', 'Cơm Gà Xối mỡ', 25000, 0,
+			'https://cdn.cet.edu.vn/wp-content/uploads/2020/04/cach-lam-com-chien-ga-xoi-mo.jpg'
+		)
+	INTO FOOD ( Id, RestaurantUsername, Name, Price, Quantity, ImageLink )
+		VALUES (
+			'45a06734-7c63-4dae-bf9e-5fa674926da2', 'luckrestaurant', 'Cơm Sườn', 25000, 0,
+			'https://comtamtuonghan.vn/wp-content/uploads/2020/09/com-tam-suon-nuong-tang-1.png'
+		)
+SELECT 1 FROM DUAL;
 
-SELECT * FROM admin WHERE Email = 'theboost1305@gmail.com'
 
 
 

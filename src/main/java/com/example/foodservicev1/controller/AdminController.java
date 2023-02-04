@@ -34,12 +34,7 @@ public class AdminController {
         model.addAttribute("deleteResponse", -2);
         if (model.getAttribute("email") == null) {
             return new ModelAndView("redirect:/api/admin/login");
-        } /*else {
-            String tmpemail = (String)model.getAttribute("email");
-            if(tmpemail.equals("-1")) {
-                return new ModelAndView("redirect:/api/admin/login");
-            }
-        }*/
+        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/home");
         return modelAndView;

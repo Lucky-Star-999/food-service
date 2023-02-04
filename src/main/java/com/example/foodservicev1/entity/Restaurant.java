@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Restaurant {
-    private String id;
+    private String username;
     private String name;
     private String email;
     private String password;
