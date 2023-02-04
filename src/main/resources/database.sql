@@ -59,7 +59,7 @@ SELECT 1 FROM DUAL;
 
 
 
-
+SELECT * FROM admin WHERE Email = 'theboost1305@gmail.com'
 
 
 

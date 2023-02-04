@@ -37,4 +37,16 @@ public class AdminServiceImpl implements AdminService {
     public int delete(String email) {
         return adminRepository.delete(email);
     }
+
+    @Override
+    public int login(String email, String password) {
+        Admin admin = adminRepository.findByEmail(email);
+        if (admin == null) {
+            return -1;
+        } else if (admin.getPassword().equals(password)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

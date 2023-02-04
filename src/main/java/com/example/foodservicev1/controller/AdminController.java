@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@SessionAttributes({"saveResponse","updateResponse", "deleteResponse"})
+import javax.servlet.http.HttpSession;
+
+@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "email"})
 @Controller
 public class AdminController {
     @Autowired
@@ -23,12 +26,23 @@ public class AdminController {
     @Autowired
     private RestaurantService restaurantService;
 
+    /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/admin")
-    public String home(Model model) {
+    public ModelAndView home(Model model) {
         model.addAttribute("saveResponse", -2);
         model.addAttribute("updateResponse", -2);
         model.addAttribute("deleteResponse", -2);
-        return "admin/home";
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        } /*else {
+            String tmpemail = (String)model.getAttribute("email");
+            if(tmpemail.equals("-1")) {
+                return new ModelAndView("redirect:/api/admin/login");
+            }
+        }*/
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/home");
+        return modelAndView;
     }
 
     /////////////////////////// Read //////////////////////////////
@@ -55,9 +69,9 @@ public class AdminController {
         model.addAttribute("admin", new Admin());
         String modalId = "modal";
         String modalContent = "Create Admin successfully";
-        if((int)model.getAttribute("saveResponse") == -2) {
+        if ((int) model.getAttribute("saveResponse") == -2) {
             modalId = "notModal";
-        } else if ((int)model.getAttribute("saveResponse") == 0){
+        } else if ((int) model.getAttribute("saveResponse") == 0) {
             modalContent = "The email is existed";
         }
         model.addAttribute("modalId", modalId);
@@ -70,9 +84,9 @@ public class AdminController {
         model.addAttribute("admin", adminService.findByEmail(email));
         String modalId = "modal";
         String modalContent = "Update Admin successfully";
-        if((int)model.getAttribute("updateResponse") == -2) {
+        if ((int) model.getAttribute("updateResponse") == -2) {
             modalId = "notModal";
-        } else if ((int)model.getAttribute("updateResponse") == 0){
+        } else if ((int) model.getAttribute("updateResponse") == 0) {
             modalContent = "Something wrong happen!";
         }
         model.addAttribute("modalId", modalId);
@@ -85,14 +99,39 @@ public class AdminController {
         model.addAttribute("customer", new Customer());
         String modalId = "modal";
         String modalContent = "Create Customer successfully";
-        if((int)model.getAttribute("saveResponse") != -1) {
+        if ((int) model.getAttribute("saveResponse") != -1) {
             modalId = "notModal";
-        } else if ((int)model.getAttribute("saveResponse") == 0){
+        } else if ((int) model.getAttribute("saveResponse") == 0) {
             modalContent = "The email is existed";
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
         return "admin/save-customer";
+    }
+
+    @GetMapping("/api/admin/login")
+    public String loginPage(Model model) {
+        String modalContent = "Login successfully";
+        String modalId = "modal";
+
+        int response = -2;
+
+        if (model.getAttribute("loginResponse") == null) {
+            modalId = "notModal";
+        } else {
+            response = (int) model.getAttribute("loginResponse");
+            if (response == -1) {
+                modalContent = "The email does not exist!";
+            } else if (response == 0) {
+                modalContent = "Wrong password!";
+            }
+            model.addAttribute("modalId", modalId);
+            model.addAttribute("modalContent", modalContent);
+        }
+
+        model.addAttribute("loginResponse", null);
+
+        return "admin/login";
     }
 
     /////////////////////////// Create //////////////////////////////
@@ -120,9 +159,43 @@ public class AdminController {
 
     /////////////////////////// Delete //////////////////////////////
     @DeleteMapping("api/admin/admin/{email}")
-    public ModelAndView delete(Model model, @PathVariable String email) {
+    public ModelAndView delete(Model model, @PathVariable String email, HttpSession httpsession, SessionStatus status) {
         model.addAttribute("admin", new Admin());
         model.addAttribute("deleteResponse", adminService.delete(email));
+        if (model.getAttribute("email").equals(email)) {
+            /*Mark the current handler's session processing as complete, allowing for cleanup of
+  session attributes.*/
+            status.setComplete();
+            /* Invalidates this session then unbinds any objects bound to it. */
+            httpsession.invalidate();
+            return new ModelAndView("redirect:/api/admin/login");
+        }
         return new ModelAndView("redirect:/api/admin");
+    }
+
+    /////////////////////////// Login //////////////////////////////
+    @PostMapping("api/admin/login")
+    public ModelAndView login(Model model, @RequestParam String email, @RequestParam String password) {
+        model.addAttribute("admin", new Admin());
+
+        int response = adminService.login(email, password);
+        model.addAttribute("loginResponse", response);
+
+        if (response == 1) {
+            model.addAttribute("email", email);
+            return new ModelAndView("redirect:/api/admin");
+        }
+        return new ModelAndView("redirect:/api/admin/login");
+    }
+
+    /////////////////////////// Logout //////////////////////////////
+    @GetMapping("/api/admin/logout")
+    public ModelAndView logout(Model model, HttpSession httpsession, SessionStatus status) {
+        /*Mark the current handler's session processing as complete, allowing for cleanup of
+  session attributes.*/
+        status.setComplete();
+        /* Invalidates this session then unbinds any objects bound to it. */
+        httpsession.invalidate();
+        return new ModelAndView("redirect:/api/admin/login");
     }
 }

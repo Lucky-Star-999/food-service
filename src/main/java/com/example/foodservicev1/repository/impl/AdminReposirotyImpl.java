@@ -22,7 +22,11 @@ public class AdminReposirotyImpl implements AdminRepository {
 
     @Override
     public Admin findByEmail(String email) {
-        return jdbcTemplate.queryForObject("SELECT * FROM ADMIN WHERE Email = ?", new AdminRowMapper(), email);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM ADMIN WHERE Email = ?", new AdminRowMapper(), email);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

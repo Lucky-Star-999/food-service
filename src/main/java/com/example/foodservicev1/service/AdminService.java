@@ -12,5 +12,5 @@ public interface AdminService {
     public int save(Admin admin);
     public int update(Admin admin);
     public int delete(String email);
-
+    public int login(String email, String password);
 }
