@@ -163,6 +163,27 @@ public class AdminController {
         return "admin/edit-customer";
     }
 
+    // Page of Create Restaurant
+    @GetMapping("/api/admin/create-restaurant")
+    public String saveRestaurantPage(Model model) {
+        // Add object for form
+        model.addAttribute("restaurant", new Restaurant());
+
+        // Set up the modal message
+        String modalId = "modal";
+        String modalContent = "Create Restaurant successfully";
+        if ((int) model.getAttribute("saveResponse") == -2) {
+            modalId = "notModal";
+        } else if ((int) model.getAttribute("saveResponse") == 0) {
+            modalContent = "The username is existed";
+        }
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+
+        // Return the page
+        return "admin/save-restaurant";
+    }
+
     // Page of Update Restaurant
     @GetMapping("/api/admin/update-restaurant/{username}")
     public String updateRestaurantPage(Model model, @PathVariable String username) {
