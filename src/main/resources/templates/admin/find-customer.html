@@ -35,7 +35,9 @@
                     <td th:utext="${customer.password}"></td>
                     <td th:utext="${customer.fullname}"></td>
                     <td th:utext="${customer.phone}"></td>
-                    <td><button class="btn btn-success">Edit</button></td>
+                    <td>
+                        <a th:href="@{|/api/admin/update-customer/${customer.email}}|" class="btn btn-success">Edit</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

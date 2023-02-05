@@ -40,7 +40,7 @@
             </div>
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary">Create</button>
-                <a href="/api/admin" type="button" class="btn btn-secondary ms-5">Cancel</a>
+                <a href="/api/admin/customers" type="button" class="btn btn-secondary ms-5">Cancel</a>
             </div>
         </form>
     </div>
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Message</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" th:utext="${modalContent}">

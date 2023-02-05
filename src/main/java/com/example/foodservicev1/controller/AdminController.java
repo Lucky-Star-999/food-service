@@ -29,39 +29,72 @@ public class AdminController {
     /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/admin")
     public ModelAndView home(Model model) {
+        // Set some value of attributes for modal appear
         model.addAttribute("saveResponse", -2);
         model.addAttribute("updateResponse", -2);
         model.addAttribute("deleteResponse", -2);
+        model.addAttribute("loginResponse", -2);
+
+        // Exit to login page if not login yet
         if (model.getAttribute("email") == null) {
             return new ModelAndView("redirect:/api/admin/login");
         }
+
+        // Create the page
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/home");
+
+        // Return home page
         return modelAndView;
     }
 
     /////////////////////////// Read //////////////////////////////
+    // Page of Manage Administrators
     @GetMapping("/api/admin/admins")
-    public String findAll(Model model) {
+    public String manageAdminsPage(Model model) {
+        // Set some value of attributes for modal appear
+        model.addAttribute("saveResponse", -2);
+        model.addAttribute("updateResponse", -2);
+        model.addAttribute("deleteResponse", -2);
+        model.addAttribute("loginResponse", -2);
+
         model.addAttribute("admins", adminService.findAll());
         return "admin/find-admin";
     }
 
+    // Page of Manage Customers
     @GetMapping("/api/admin/customers")
-    public String findAllCustomers(Model model) {
+    public String manageCustomersPage(Model model) {
+        // Set some value of attributes for modal appear
+        model.addAttribute("saveResponse", -2);
+        model.addAttribute("updateResponse", -2);
+        model.addAttribute("deleteResponse", -2);
+        model.addAttribute("loginResponse", -2);
+
         model.addAttribute("customers", customerService.findAll());
         return "admin/find-customer";
     }
 
+    // Page of Manage Restaurants
     @GetMapping("/api/admin/restaurants")
-    public String findAllRestaurants(Model model) {
+    public String manageRestaurantsPage(Model model) {
+        // Set some value of attributes for modal appear
+        model.addAttribute("saveResponse", -2);
+        model.addAttribute("updateResponse", -2);
+        model.addAttribute("deleteResponse", -2);
+        model.addAttribute("loginResponse", -2);
+
         model.addAttribute("restaurants", restaurantService.findAll());
         return "admin/find-restaurant";
     }
 
+    // Page of Create Administrators
     @GetMapping("/api/admin/create-admin")
-    public String saveAdminPage(Model model) {
+    public String createAdminPage(Model model) {
+        // Add object for form
         model.addAttribute("admin", new Admin());
+
+        // Set up the modal message
         String modalId = "modal";
         String modalContent = "Create Admin successfully";
         if ((int) model.getAttribute("saveResponse") == -2) {
@@ -71,9 +104,12 @@ public class AdminController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
+
+        // Return the page
         return "admin/save-admin";
     }
 
+    // Page of Update Administrators
     @GetMapping("/api/admin/update-admin/{email}")
     public String updateAdminPage(Model model, @PathVariable String email) {
         model.addAttribute("admin", adminService.findByEmail(email));
@@ -89,21 +125,44 @@ public class AdminController {
         return "admin/edit-admin";
     }
 
+    // Page of Create Customers
     @GetMapping("/api/admin/create-customer")
     public String saveCustomerPage(Model model) {
+        // Add object for form
         model.addAttribute("customer", new Customer());
+
+        // Set up the modal message
         String modalId = "modal";
         String modalContent = "Create Customer successfully";
-        if ((int) model.getAttribute("saveResponse") != -1) {
+        if ((int) model.getAttribute("saveResponse") == -2) {
             modalId = "notModal";
         } else if ((int) model.getAttribute("saveResponse") == 0) {
             modalContent = "The email is existed";
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
+
+        // Return the page
         return "admin/save-customer";
     }
 
+    // Page of Update Customer
+    @GetMapping("/api/admin/update-customer/{email}")
+    public String updateCustomerPage(Model model, @PathVariable String email) {
+        model.addAttribute("customer", customerService.findByEmail(email));
+        String modalId = "modal";
+        String modalContent = "Update Customer successfully";
+        if ((int) model.getAttribute("updateResponse") == -2) {
+            modalId = "notModal";
+        } else if ((int) model.getAttribute("updateResponse") == 0) {
+            modalContent = "Something wrong happen!";
+        }
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+        return "admin/edit-customer";
+    }
+
+    // Page of Login
     @GetMapping("/api/admin/login")
     public String loginPage(Model model) {
         String modalContent = "Login successfully";
@@ -146,10 +205,17 @@ public class AdminController {
 
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/admin/admin")
-    public ModelAndView update(Model model, @ModelAttribute Admin admin) {
+    public ModelAndView updateAdmin(Model model, @ModelAttribute Admin admin) {
         model.addAttribute("admin", new Admin());
         model.addAttribute("updateResponse", adminService.update(admin));
         return new ModelAndView("redirect:/api/admin/update-admin/" + admin.getEmail());
+    }
+
+    @PutMapping("/api/admin/customer")
+    public ModelAndView updateCustomer(Model model, @ModelAttribute Customer customer) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("updateResponse", customerService.update(customer));
+        return new ModelAndView("redirect:/api/admin/update-customer/" + customer.getEmail());
     }
 
     /////////////////////////// Delete //////////////////////////////
@@ -165,7 +231,15 @@ public class AdminController {
             httpsession.invalidate();
             return new ModelAndView("redirect:/api/admin/login");
         }
-        return new ModelAndView("redirect:/api/admin");
+        return new ModelAndView("redirect:/api/admin/admins");
+    }
+
+    @DeleteMapping("api/admin/customer/{email}")
+    public ModelAndView deleteCustomer(Model model, @PathVariable String email,
+                                       HttpSession httpsession, SessionStatus status) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("deleteResponse", customerService.delete(email));
+        return new ModelAndView("redirect:/api/admin/customers");
     }
 
     /////////////////////////// Login //////////////////////////////
