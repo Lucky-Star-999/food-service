@@ -1,6 +1,5 @@
 package com.example.foodservicev1.service.impl;
 
-import com.example.foodservicev1.entity.Admin;
 import com.example.foodservicev1.entity.Restaurant;
 import com.example.foodservicev1.repository.RestaurantRepository;
 import com.example.foodservicev1.service.RestaurantService;
@@ -21,14 +20,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant findByUsername(String username) {
-        return restaurantRepository.findByUsername(username);
-    }
+    public Restaurant findByUsername(String username) { return restaurantRepository.findByUsername(username); }
 
     @Override
-    public int save(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
-    }
+    public int save(Restaurant restaurant) { return restaurantRepository.save(restaurant); }
 
     @Override
     public int update(Restaurant restaurant) {

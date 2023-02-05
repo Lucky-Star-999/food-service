@@ -2,6 +2,7 @@ package com.example.foodservicev1.controller;
 
 import com.example.foodservicev1.entity.Admin;
 import com.example.foodservicev1.entity.Customer;
+import com.example.foodservicev1.entity.Restaurant;
 import com.example.foodservicev1.service.AdminService;
 import com.example.foodservicev1.service.CustomerService;
 import com.example.foodservicev1.service.RestaurantService;
@@ -162,6 +163,22 @@ public class AdminController {
         return "admin/edit-customer";
     }
 
+    // Page of Update Restaurant
+    @GetMapping("/api/admin/update-restaurant/{username}")
+    public String updateRestaurantPage(Model model, @PathVariable String username) {
+        model.addAttribute("restaurant", restaurantService.findByUsername(username));
+        String modalId = "modal";
+        String modalContent = "Update Restaurant successfully";
+        if ((int) model.getAttribute("updateResponse") == -2) {
+            modalId = "notModal";
+        } else if ((int) model.getAttribute("updateResponse") == 0) {
+            modalContent = "Something wrong happen!";
+        }
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+        return "admin/edit-restaurant";
+    }
+
     // Page of Login
     @GetMapping("/api/admin/login")
     public String loginPage(Model model) {
@@ -203,6 +220,13 @@ public class AdminController {
         return new ModelAndView("redirect:/api/admin/create-customer");
     }
 
+    @PostMapping("/api/admin/restaurant")
+    public ModelAndView saveRestaurant(Model model, @ModelAttribute Restaurant restaurant) {
+        model.addAttribute("restaurant", new Restaurant());
+        model.addAttribute("saveResponse", restaurantService.save(restaurant));
+        return new ModelAndView("redirect:/api/admin/create-restaurant");
+    }
+
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/admin/admin")
     public ModelAndView updateAdmin(Model model, @ModelAttribute Admin admin) {
@@ -216,6 +240,13 @@ public class AdminController {
         model.addAttribute("customer", new Customer());
         model.addAttribute("updateResponse", customerService.update(customer));
         return new ModelAndView("redirect:/api/admin/update-customer/" + customer.getEmail());
+    }
+
+    @PutMapping("/api/admin/restaurant")
+    public ModelAndView updateRestaurant(Model model, @ModelAttribute Restaurant restaurant) {
+        model.addAttribute("restaurant", new Restaurant());
+        model.addAttribute("updateResponse", restaurantService.update(restaurant));
+        return new ModelAndView("redirect:/api/admin/update-restaurant/" + restaurant.getUsername());
     }
 
     /////////////////////////// Delete //////////////////////////////
@@ -240,6 +271,14 @@ public class AdminController {
         model.addAttribute("customer", new Customer());
         model.addAttribute("deleteResponse", customerService.delete(email));
         return new ModelAndView("redirect:/api/admin/customers");
+    }
+
+    @DeleteMapping("api/admin/restaurant/{username}")
+    public ModelAndView deleteRestaurant(Model model, @PathVariable String username,
+                                       HttpSession httpsession, SessionStatus status) {
+        model.addAttribute("restaurant", new Restaurant());
+        model.addAttribute("deleteResponse", restaurantService.delete(username));
+        return new ModelAndView("redirect:/api/admin/restaurants");
     }
 
     /////////////////////////// Login //////////////////////////////
