@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 @SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "username"})
 @Controller
@@ -111,6 +114,14 @@ public class RestaurantController {
             model.addAttribute("username", username);
             return new ModelAndView("redirect:/api/restaurant");
         }
+        return new ModelAndView("redirect:/api/restaurant/login");
+    }
+
+    /////////////////////////// Logout //////////////////////////////
+    @GetMapping("/api/restaurant/logout")
+    public ModelAndView logout(Model model, HttpSession httpsession, SessionStatus status) {
+        status.setComplete();
+        httpsession.invalidate();
         return new ModelAndView("redirect:/api/restaurant/login");
     }
 }
