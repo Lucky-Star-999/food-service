@@ -104,6 +104,7 @@ SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD H
 SELECT CURRENT_DATE FROM dual
 
 
+SELECT * FROM FOOD
 
 
 

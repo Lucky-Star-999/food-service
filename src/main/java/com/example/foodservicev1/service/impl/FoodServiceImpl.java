@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -26,13 +27,12 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public int save(Food food) {
+        food.setId(UUID.randomUUID().toString());
         return foodRepository.save(food);
     }
 
     @Override
-    public int update(Food food) {
-        return foodRepository.update(food);
-    }
+    public int update(Food food) { return foodRepository.update(food); }
 
     @Override
     public int delete(String id) {

@@ -38,7 +38,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     public int save(Food food) {
         try {
             return jdbcTemplate.update("INSERT INTO FOOD ( Id, RestaurantUsername, Name, Price, ImageLink )" +
-                            "VALUES ( ?, ?, ?, ? )",
+                            "VALUES ( ?, ?, ?, ?, ? )",
                     new Object[]{food.getId(), food.getRestaurantUsername(), food.getName(),
                                 food.getPrice(), food.getImageLink()});
         } catch (Exception e) {

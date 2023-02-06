@@ -110,6 +110,21 @@ public class RestaurantController {
         return "restaurant/profile";
     }
 
+    @GetMapping("/api/restaurant/create-food")
+    public String createFoodPage(Model model) {
+        model.addAttribute("food", new Food());
+        String modalId = "modal";
+        String modalContent = "Update Food successfully";
+        if ((int) model.getAttribute("saveResponse") == -2) {
+            modalId = "notModal";
+        } else if ((int) model.getAttribute("saveResponse") == 0) {
+            modalContent = "Something wrong happen!";
+        }
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+        return "restaurant/create-food";
+    }
+
     @GetMapping("/api/restaurant/update-food/{id}")
     public String updateFoodPage(Model model, @PathVariable String id) {
         model.addAttribute("food", foodService.findById(id));
@@ -132,6 +147,14 @@ public class RestaurantController {
         model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("saveResponse", restaurantService.save(restaurant));
         return new ModelAndView("redirect:/api/restaurant/register");
+    }
+
+    @PostMapping("/api/restaurant/food")
+    public ModelAndView saveFood(Model model, @ModelAttribute Food food) {
+        model.addAttribute("food", new Food());
+        food.setRestaurantUsername((String)model.getAttribute("username"));
+        model.addAttribute("saveResponse", foodService.save(food));
+        return new ModelAndView("redirect:/api/restaurant/create-food");
     }
 
 
