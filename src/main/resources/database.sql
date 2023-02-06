@@ -82,6 +82,28 @@ SELECT 1 FROM DUAL;
 
 
 
+-- Create table Order and add some data
+CREATE TABLE SERVICEORDER (
+	Id VARCHAR2(200) PRIMARY KEY,
+	RestaurantUsername VARCHAR2(100),
+	CustomerEmail NVARCHAR2(100),
+	CreatedDate TIMESTAMP
+);
+
+INSERT ALL
+    INTO SERVICEORDER ( Id, RestaurantUsername, CustomerEmail, CreatedDate )
+		VALUES (
+			'8b9bb01d-c318-44bc-93e9-fd28f958ffd1', 'luckrestaurant', 'theboost1305@gmail.com', CURRENT_DATE
+		)
+SELECT 1 FROM DUAL;
+
+
+
+SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD HH24:MI:SSxFF')  FROM SERVICEORDER
+
+
+SELECT CURRENT_DATE FROM dual
+
 
 
 

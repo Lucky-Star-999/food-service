@@ -2,7 +2,7 @@ package com.example.foodservicev1.entity;
 
 import lombok.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-public class Order {
+public class ServiceOrder {
     private String id;
     private String restaurantUsername;
     private String customerEmail;
-    private LocalDateTime createdDate;
+    private Timestamp createdDate;
 }

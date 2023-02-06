@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -161,7 +160,7 @@ public class CustomerController {
         return new ModelAndView("redirect:/api/customer/register");
     }
 
-    @PostMapping("/api/customer/order")
+    /*@PostMapping("/api/customer/order")
     public String restaurantPage(Model model,
                                  @RequestParam List<String> idList,
                                  @RequestParam List<String> nameList,
@@ -181,14 +180,12 @@ public class CustomerController {
 
         model.addAttribute("email", "theboost1305@gmail.com");
 
-        Order order = new Order(uniqueID, restaurantUsername, (String)model.getAttribute("email"), now);
+        ServiceOrder order = new ServiceOrder(uniqueID, restaurantUsername, (String)model.getAttribute("email"), now);
 
 
 
 
         for (int i=0; i<idList.size(); i++) {
-            /*foods.add(new Food(idList.get(i), "luckrestaurant",
-                    nameList.get(i), priceList.get(i), quantityList.get(i), ""));*/
             orderFoods.add(new OrderFood(order.getId(), idList.get(i), quantityList.get(i)));
         }
 
@@ -202,7 +199,7 @@ public class CustomerController {
         
 
         return "customer/restaurant";
-    }
+    }*/
 
 
     /////////////////////////// Update //////////////////////////////
