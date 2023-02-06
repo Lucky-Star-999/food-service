@@ -63,19 +63,18 @@ CREATE TABLE FOOD (
 	RestaurantUsername VARCHAR2(100),
 	Name NVARCHAR2(200),
 	Price NUMBER,
-	Quantity NUMBER,
 	ImageLink VARCHAR2(2000)
 );
 
 INSERT ALL
-    INTO FOOD ( Id, RestaurantUsername, Name, Price, Quantity, ImageLink )
+    INTO FOOD ( Id, RestaurantUsername, Name, Price, ImageLink )
 		VALUES (
-			'b170bcaa-8008-4889-aa8c-886950a2ce22', 'luckrestaurant', 'Cơm Gà Xối mỡ', 25000, 0,
+			'b170bcaa-8008-4889-aa8c-886950a2ce22', 'luckrestaurant', 'Cơm Gà Xối mỡ', 25000,
 			'https://cdn.cet.edu.vn/wp-content/uploads/2020/04/cach-lam-com-chien-ga-xoi-mo.jpg'
 		)
-	INTO FOOD ( Id, RestaurantUsername, Name, Price, Quantity, ImageLink )
+	INTO FOOD ( Id, RestaurantUsername, Name, Price, ImageLink )
 		VALUES (
-			'45a06734-7c63-4dae-bf9e-5fa674926da2', 'luckrestaurant', 'Cơm Sườn', 25000, 0,
+			'45a06734-7c63-4dae-bf9e-5fa674926da2', 'luckrestaurant', 'Cơm Sườn', 25000,
 			'https://comtamtuonghan.vn/wp-content/uploads/2020/09/com-tam-suon-nuong-tang-1.png'
 		)
 SELECT 1 FROM DUAL;
@@ -99,7 +98,7 @@ SELECT 1 FROM DUAL;
 
 
 
-SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD HH24:MI:SSxFF')  FROM SERVICEORDER
+SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD HH24:MI:SS') CreatedDate  FROM SERVICEORDER
 
 
 SELECT CURRENT_DATE FROM dual

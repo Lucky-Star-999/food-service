@@ -62,7 +62,7 @@
                     <th>Food ID</th>
                     <th>Food name</th>
                     <th>Price</th>
-                    <th>Quantity Sold</th>
+                    <!--<th>Quantity Sold</th>-->
                     <th>Image Link</th>
                     <th></th>
                 </tr>
@@ -72,7 +72,7 @@
                     <td th:utext="${food.id}"></td>
                     <td th:utext="${food.name}"></td>
                     <td th:utext="${food.price}"></td>
-                    <td th:utext="${food.quantity}"></td>
+                    <!--<td th:utext="${food.quantity}"></td>-->
                     <td>
                         <a th:href="${food.imageLink}|" target="_blank" class="btn btn-success">Image</a>
                     </td>

@@ -15,7 +15,6 @@ public class FoodRowMapper implements RowMapper<Food> {
         food.setRestaurantUsername(rs.getString("RestaurantUsername"));
         food.setName(rs.getString("Name"));
         food.setPrice(rs.getDouble("Price"));
-        food.setQuantity(rs.getInt("Quantity"));
         food.setImageLink(rs.getString("ImageLink"));
         return food;
     }

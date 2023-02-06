@@ -36,21 +36,42 @@ public class FoodRepositoryImpl implements FoodRepository {
 
     @Override
     public int save(Food food) {
-        return 0;
+        try {
+            return jdbcTemplate.update("INSERT INTO FOOD ( Id, RestaurantUsername, Name, Price, ImageLink )" +
+                            "VALUES ( ?, ?, ?, ? )",
+                    new Object[]{food.getId(), food.getRestaurantUsername(), food.getName(),
+                                food.getPrice(), food.getImageLink()});
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
     public int update(Food food) {
-        return 0;
+        try {
+            return jdbcTemplate.update("UPDATE FOOD SET " +
+                            "Name = ?, Price = ?, ImageLink = ? WHERE Id = ?",
+                    new Object[]{food.getName(), food.getPrice(), food.getImageLink(), food.getId()});
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
     public int delete(String id) {
-        return 0;
+        try {
+            return jdbcTemplate.update("DELETE FROM FOOD WHERE Id = ?", id);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
     public int deleteByRestaurantUsername(String restaurantUsername) {
-        return 0;
+        try {
+            return jdbcTemplate.update("DELETE FROM FOOD WHERE RestaurantUsername = ?", restaurantUsername);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

@@ -12,6 +12,5 @@ public class Food {
     private String restaurantUsername;
     private String name;
     private double price;
-    private int quantity;
     private String imageLink;
 }
