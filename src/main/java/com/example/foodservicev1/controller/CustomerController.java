@@ -93,6 +93,49 @@ public class CustomerController {
         return "customer/restaurant";
     }
 
+    // Page of Create Customers (Register)
+    @GetMapping("/api/customer/register")
+    public String saveCustomerPage(Model model) {
+        // Add object for form
+        model.addAttribute("customer", new Customer());
+
+        // Set up the modal message
+        String modalId = "modal";
+        String modalContent = "Create Customer successfully";
+        if (model.getAttribute("saveResponse") == null) {
+            modalId = "notModal";
+        } else {
+            if ((int) model.getAttribute("saveResponse") == -2) {
+                modalId = "notModal";
+            } else if ((int) model.getAttribute("saveResponse") == 0) {
+                modalContent = "The email is existed";
+            }
+        }
+
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+
+        // Return the page
+        return "customer/save-customer";
+    }
+
+
+    // Page of Update Customer (Profile)
+    @GetMapping("/api/customer/profile")
+    public String updateCustomerPage(Model model) {
+        model.addAttribute("customer", customerService.findByEmail((String)model.getAttribute("email")));
+        String modalId = "modal";
+        String modalContent = "Update Customer successfully";
+        if ((int) model.getAttribute("updateResponse") == -2) {
+            modalId = "notModal";
+        } else if ((int) model.getAttribute("updateResponse") == 0) {
+            modalContent = "Something wrong happen!";
+        }
+        model.addAttribute("modalId", modalId);
+        model.addAttribute("modalContent", modalContent);
+        return "customer/profile";
+    }
+
 
 
 
@@ -111,6 +154,13 @@ public class CustomerController {
 
 
     /////////////////////////// Create //////////////////////////////
+    @PostMapping("/api/customer/customer")
+    public ModelAndView saveCustomer(Model model, @ModelAttribute Customer customer) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("saveResponse", customerService.save(customer));
+        return new ModelAndView("redirect:/api/customer/register");
+    }
+
     @PostMapping("/api/customer/order")
     public String restaurantPage(Model model,
                                  @RequestParam List<String> idList,
@@ -156,10 +206,23 @@ public class CustomerController {
 
 
     /////////////////////////// Update //////////////////////////////
+    @PutMapping("/api/customer/customer")
+    public ModelAndView updateCustomer(Model model, @ModelAttribute Customer customer) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("updateResponse", customerService.update(customer));
+        return new ModelAndView("redirect:/api/customer/profile");
+    }
 
 
     /////////////////////////// Delete //////////////////////////////
-
+    @DeleteMapping("api/customer/customer/{email}")
+    public ModelAndView delete(Model model, @PathVariable String email, HttpSession httpsession, SessionStatus status) {
+        model.addAttribute("admin", new Admin());
+        model.addAttribute("deleteResponse", customerService.delete(email));
+        status.setComplete();
+        httpsession.invalidate();
+        return new ModelAndView("redirect:/api/customer/login");
+    }
 
     /////////////////////////// Login //////////////////////////////
     @PostMapping("/api/customer/login")
