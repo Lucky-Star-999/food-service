@@ -143,7 +143,12 @@ public class CustomerController {
         return "customer/profile";
     }
 
+    @GetMapping("/api/customer/order-confirm/{orderId}")
+    public String orderConfirmPage(Model model, @PathVariable String orderId) {
 
+
+        return "customer/order-confirm";
+    }
 
 
     /*@PostMapping("order")
@@ -253,15 +258,12 @@ public class CustomerController {
     }*/
 
     @PostMapping("/api/customer/order")
-    public String addOrder(Model model,
+    public ModelAndView addOrder(Model model,
                                  @RequestParam List<String> foodIdList,
                                  @RequestParam List<Integer> quantityList,
                                  @RequestParam String restaurantUsername) {
 
         String uniqueID = UUID.randomUUID().toString();
-
-        List<Food> foods = new ArrayList<>();
-        List<OrderFood> orderFoods = new ArrayList<>();
 
         serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername,
                 (String) model.getAttribute("email"), null));
@@ -270,7 +272,9 @@ public class CustomerController {
             orderFoodService.save(new OrderFood(uniqueID, foodIdList.get(i), quantityList.get(i)));
         }
 
-        return "customer/order-confirm";
+        model.addAttribute("orderId", uniqueID);
+
+        return new ModelAndView("redirect:/api/customer/order-confirm/" + uniqueID);
     }
 
 
