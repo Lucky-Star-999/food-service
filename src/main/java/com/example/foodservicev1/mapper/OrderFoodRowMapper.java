@@ -13,7 +13,9 @@ public class OrderFoodRowMapper implements RowMapper<OrderFood> {
         OrderFood orderFood = new OrderFood();
         orderFood.setOrderId(rs.getString("OrderId"));
         orderFood.setFoodId(rs.getString("FoodId"));
+        orderFood.setFoodName(rs.getString("FoodName"));
         orderFood.setQuantity(rs.getInt("Quantity"));
+        orderFood.setPrice(rs.getDouble("Price"));
         return orderFood;
     }
 }

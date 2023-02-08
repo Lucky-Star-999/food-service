@@ -260,16 +260,20 @@ public class CustomerController {
     @PostMapping("/api/customer/order")
     public ModelAndView addOrder(Model model,
                                  @RequestParam List<String> foodIdList,
+                                 @RequestParam List<String> foodNameList,
                                  @RequestParam List<Integer> quantityList,
-                                 @RequestParam String restaurantUsername) {
+                                 @RequestParam List<Double> priceList,
+                                 @RequestParam String restaurantUsername,
+                                 @RequestParam String restaurantName) {
 
         String uniqueID = UUID.randomUUID().toString();
 
-        serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername,
+        serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername, restaurantName,
                 (String) model.getAttribute("email"), null));
 
         for (int i = 0; i < foodIdList.size(); i++) {
-            orderFoodService.save(new OrderFood(uniqueID, foodIdList.get(i), quantityList.get(i)));
+            orderFoodService.save(new OrderFood(uniqueID, foodIdList.get(i),
+                    foodNameList.get(i), quantityList.get(i), priceList.get(i)));
         }
 
         model.addAttribute("orderId", uniqueID);

@@ -48,10 +48,10 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     public int save(ServiceOrder serviceOrder) {
         try {
             return jdbcTemplate.update(
-                    "INSERT INTO SERVICEORDER ( Id, RestaurantUsername, CustomerEmail, CreatedDate )" +
-                            "VALUES ( ?, ?, ?, CURRENT_DATE )",
+                    "INSERT INTO SERVICEORDER ( Id, RestaurantUsername, RestaurantName, CustomerEmail, CreatedDate )" +
+                            "VALUES ( ?, ?, ?, ?, CURRENT_DATE )",
                     new Object[]{serviceOrder.getId(), serviceOrder.getRestaurantUsername(),
-                            serviceOrder.getCustomerEmail()});
+                            serviceOrder.getRestaurantName(), serviceOrder.getCustomerEmail()});
         } catch (Exception e) {
             return 0;
         }

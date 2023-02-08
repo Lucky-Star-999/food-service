@@ -29,9 +29,10 @@ public class OrderFoodRepositoryImpl implements OrderFoodRepository {
     @Override
     public int save(OrderFood orderFood) {
         try {
-            return jdbcTemplate.update("INSERT INTO ORDERFOOD ( OrderId, FoodId, Quantity )" +
-                            "VALUES ( ?, ?, ? )",
-                    new Object[]{orderFood.getOrderId(), orderFood.getFoodId(), orderFood.getQuantity()});
+            return jdbcTemplate.update("INSERT INTO ORDERFOOD ( OrderId, FoodId, FoodName, Quantity, Price )" +
+                            "VALUES ( ?, ?, ?, ?, ? )",
+                    new Object[]{orderFood.getOrderId(), orderFood.getFoodId(),
+                            orderFood.getFoodName(), orderFood.getQuantity(), orderFood.getPrice()});
         } catch (Exception e) {
             return 0;
         }

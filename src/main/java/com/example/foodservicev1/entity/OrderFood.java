@@ -10,5 +10,7 @@ import lombok.*;
 public class OrderFood {
     private String orderId;
     private String foodId;
+    private String foodName;
     private int quantity;
+    private double price;
 }

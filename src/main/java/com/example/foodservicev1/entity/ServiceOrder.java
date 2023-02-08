@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class ServiceOrder {
     private String id;
     private String restaurantUsername;
+    private String restaurantName;
     private String customerEmail;
     private Timestamp createdDate;
 }
