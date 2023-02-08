@@ -1,19 +1,12 @@
 package com.example.foodservicev1.controller;
 
-import com.example.foodservicev1.entity.Food;
-import com.example.foodservicev1.entity.OrderFood;
 import com.example.foodservicev1.entity.ServiceOrder;
 import com.example.foodservicev1.service.OrderFoodService;
-import com.example.foodservicev1.service.impl.ServiceOrderService;
+import com.example.foodservicev1.service.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 public class TestController {

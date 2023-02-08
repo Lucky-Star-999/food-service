@@ -2,14 +2,14 @@ package com.example.foodservicev1.service.impl;
 
 import com.example.foodservicev1.entity.ServiceOrder;
 import com.example.foodservicev1.repository.ServiceOrderRepository;
+import com.example.foodservicev1.service.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
-public class ServiceOrderSericeImpl implements ServiceOrderService{
+public class ServiceOrderSericeImpl implements ServiceOrderService {
 
     @Autowired
     private ServiceOrderRepository serviceOrderRepository;

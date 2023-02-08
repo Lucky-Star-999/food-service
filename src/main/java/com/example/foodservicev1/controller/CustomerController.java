@@ -1,11 +1,8 @@
 package com.example.foodservicev1.controller;
 
+import com.example.foodservicev1.dto.OrderDetailDto;
 import com.example.foodservicev1.entity.*;
-import com.example.foodservicev1.service.CustomerService;
-import com.example.foodservicev1.service.FoodService;
-import com.example.foodservicev1.service.OrderFoodService;
-import com.example.foodservicev1.service.RestaurantService;
-import com.example.foodservicev1.service.impl.ServiceOrderService;
+import com.example.foodservicev1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +33,9 @@ public class CustomerController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/customer")
@@ -145,24 +143,12 @@ public class CustomerController {
 
     @GetMapping("/api/customer/order-confirm/{orderId}")
     public String orderConfirmPage(Model model, @PathVariable String orderId) {
-
-
+        List<OrderDetailDto> orderDetailDtos = orderDetailService.findByOrderId(orderId);
+        model.addAttribute("orderID", orderId);
+        model.addAttribute("orderDetailDtos", orderDetailDtos);
         return "customer/order-confirm";
     }
 
-
-    /*@PostMapping("order")
-    public String hello(@RequestParam List<String> idList, @RequestParam List<String> quantityList) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
-
-
-
-        System.out.println(idList);
-        System.out.println(quantityList);
-        return "Hi";
-    }*/
 
 
     /////////////////////////// Create //////////////////////////////
@@ -172,90 +158,6 @@ public class CustomerController {
         model.addAttribute("saveResponse", customerService.save(customer));
         return new ModelAndView("redirect:/api/customer/register");
     }
-
-    /*@PostMapping("/api/customer/order")
-    public String restaurantPage(Model model,
-                                 @RequestParam List<String> idList,
-                                 @RequestParam List<String> nameList,
-                                 @RequestParam List<Double> priceList,
-                                 @RequestParam List<Integer> quantityList,
-                                 @RequestParam String restaurantUsername) {
-
-
-
-
-        LocalDateTime now = LocalDateTime.now();
-        String uniqueID = UUID.randomUUID().toString();
-
-        List<Food> foods = new ArrayList<>();
-        List<OrderFood> orderFoods = new ArrayList<>();
-
-
-        model.addAttribute("email", "theboost1305@gmail.com");
-
-        ServiceOrder order = new ServiceOrder(uniqueID, restaurantUsername, (String)model.getAttribute("email"), now);
-
-
-
-
-        for (int i=0; i<idList.size(); i++) {
-            orderFoods.add(new OrderFood(order.getId(), idList.get(i), quantityList.get(i)));
-        }
-
-        String username = "luckrestaurant";
-        model.addAttribute("restaurant", restaurantService.findByUsername(username));
-        model.addAttribute("foods", foodService.findByRestaurantUsername(username));
-
-        System.out.println(order);
-        System.out.println(orderFoods);
-
-        
-
-        return "customer/restaurant";
-    }*/
-
-
-    /*@PostMapping("/api/customer/order")
-    public ModelAndView restaurantPage(Model model,
-                                 @RequestParam List<String> idList,
-                                 @RequestParam List<String> nameList,
-                                 @RequestParam List<Double> priceList,
-                                 @RequestParam List<Integer> quantityList,
-                                 @RequestParam String restaurantUsername) {
-
-
-
-
-        LocalDateTime now = LocalDateTime.now();
-        String uniqueID = UUID.randomUUID().toString();
-
-        List<Food> foods = new ArrayList<>();
-        List<OrderFood> orderFoods = new ArrayList<>();
-
-
-        model.addAttribute("email", "theboost1305@gmail.com");
-
-        ServiceOrder order = new ServiceOrder(uniqueID, restaurantUsername, (String)model.getAttribute("email"), now);
-
-
-
-
-        for (int i=0; i<idList.size(); i++) {
-            orderFoods.add(new OrderFood(order.getId(), idList.get(i), quantityList.get(i)));
-        }
-
-        String username = "luckrestaurant";
-        model.addAttribute("restaurant", restaurantService.findByUsername(username));
-        model.addAttribute("foods", foodService.findByRestaurantUsername(username));
-
-        System.out.println(order);
-        System.out.println(orderFoods);
-
-        return new ModelAndView("redirect:/api/customer/restaurant/" + model.getAttribute("username"));
-
-
-
-    }*/
 
     @PostMapping("/api/customer/order")
     public ModelAndView addOrder(Model model,

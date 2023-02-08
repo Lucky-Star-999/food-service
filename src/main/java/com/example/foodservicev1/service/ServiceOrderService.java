@@ -1,4 +1,4 @@
-package com.example.foodservicev1.service.impl;
+package com.example.foodservicev1.service;
 
 import com.example.foodservicev1.entity.ServiceOrder;
 import org.springframework.stereotype.Service;
