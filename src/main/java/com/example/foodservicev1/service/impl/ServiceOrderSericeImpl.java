@@ -31,7 +31,7 @@ public class ServiceOrderSericeImpl implements ServiceOrderService{
 
     @Override
     public int save(ServiceOrder serviceOrder) {
-        serviceOrder.setId(UUID.randomUUID().toString());
+        //serviceOrder.setId(UUID.randomUUID().toString());
         return serviceOrderRepository.save(serviceOrder);
     }
 

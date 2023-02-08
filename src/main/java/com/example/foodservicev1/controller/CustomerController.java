@@ -3,7 +3,9 @@ package com.example.foodservicev1.controller;
 import com.example.foodservicev1.entity.*;
 import com.example.foodservicev1.service.CustomerService;
 import com.example.foodservicev1.service.FoodService;
+import com.example.foodservicev1.service.OrderFoodService;
 import com.example.foodservicev1.service.RestaurantService;
+import com.example.foodservicev1.service.impl.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,12 @@ public class CustomerController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @Autowired
+    private ServiceOrderService serviceOrderService;
+
+    @Autowired
+    private OrderFoodService orderFoodService;
 
     @Autowired
     private FoodService foodService;
@@ -122,7 +130,7 @@ public class CustomerController {
     // Page of Update Customer (Profile)
     @GetMapping("/api/customer/profile")
     public String updateCustomerPage(Model model) {
-        model.addAttribute("customer", customerService.findByEmail((String)model.getAttribute("email")));
+        model.addAttribute("customer", customerService.findByEmail((String) model.getAttribute("email")));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
         if ((int) model.getAttribute("updateResponse") == -2) {
@@ -200,6 +208,70 @@ public class CustomerController {
 
         return "customer/restaurant";
     }*/
+
+
+    /*@PostMapping("/api/customer/order")
+    public ModelAndView restaurantPage(Model model,
+                                 @RequestParam List<String> idList,
+                                 @RequestParam List<String> nameList,
+                                 @RequestParam List<Double> priceList,
+                                 @RequestParam List<Integer> quantityList,
+                                 @RequestParam String restaurantUsername) {
+
+
+
+
+        LocalDateTime now = LocalDateTime.now();
+        String uniqueID = UUID.randomUUID().toString();
+
+        List<Food> foods = new ArrayList<>();
+        List<OrderFood> orderFoods = new ArrayList<>();
+
+
+        model.addAttribute("email", "theboost1305@gmail.com");
+
+        ServiceOrder order = new ServiceOrder(uniqueID, restaurantUsername, (String)model.getAttribute("email"), now);
+
+
+
+
+        for (int i=0; i<idList.size(); i++) {
+            orderFoods.add(new OrderFood(order.getId(), idList.get(i), quantityList.get(i)));
+        }
+
+        String username = "luckrestaurant";
+        model.addAttribute("restaurant", restaurantService.findByUsername(username));
+        model.addAttribute("foods", foodService.findByRestaurantUsername(username));
+
+        System.out.println(order);
+        System.out.println(orderFoods);
+
+        return new ModelAndView("redirect:/api/customer/restaurant/" + model.getAttribute("username"));
+
+
+
+    }*/
+
+    @PostMapping("/api/customer/order")
+    public String addOrder(Model model,
+                                 @RequestParam List<String> foodIdList,
+                                 @RequestParam List<Integer> quantityList,
+                                 @RequestParam String restaurantUsername) {
+
+        String uniqueID = UUID.randomUUID().toString();
+
+        List<Food> foods = new ArrayList<>();
+        List<OrderFood> orderFoods = new ArrayList<>();
+
+        serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername,
+                (String) model.getAttribute("email"), null));
+
+        for (int i = 0; i < foodIdList.size(); i++) {
+            orderFoodService.save(new OrderFood(uniqueID, foodIdList.get(i), quantityList.get(i)));
+        }
+
+        return "customer/order-confirm";
+    }
 
 
     /////////////////////////// Update //////////////////////////////

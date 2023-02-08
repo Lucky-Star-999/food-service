@@ -96,6 +96,13 @@ INSERT ALL
 		)
 SELECT 1 FROM DUAL;
 
+-- Create table OrderFood and add some data
+CREATE TABLE OrderFood (
+	OrderId VARCHAR2(200),
+	FoodId VARCHAR2(100),
+	Quantity NUMBER
+);
+
 
 
 SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD HH24:MI:SS') CreatedDate  FROM SERVICEORDER
@@ -103,11 +110,11 @@ SELECT Id, RestaurantUsername, CustomerEmail, TO_CHAR(CreatedDate, 'YYYY-MM-DD H
 
 SELECT CURRENT_DATE FROM dual
 
+SELECT * FROM SERVICEORDER
 
 SELECT * FROM FOOD
 
-
-
+SELECT * FROM ORDERFOOD
 
 
 
