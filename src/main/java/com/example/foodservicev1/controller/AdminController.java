@@ -52,7 +52,7 @@ public class AdminController {
     /////////////////////////// Read //////////////////////////////
     // Page of Manage Administrators
     @GetMapping("/api/admin/admins")
-    public String manageAdminsPage(Model model) {
+    public ModelAndView manageAdminsPage(Model model) {
         // Set some value of attributes for modal appear
         model.addAttribute("saveResponse", -2);
         model.addAttribute("updateResponse", -2);
@@ -60,12 +60,16 @@ public class AdminController {
         model.addAttribute("loginResponse", -2);
 
         model.addAttribute("admins", adminService.findAll());
-        return "admin/find-admin";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/find-admin");
+
+        return modelAndView;
     }
 
     // Page of Manage Customers
     @GetMapping("/api/admin/customers")
-    public String manageCustomersPage(Model model) {
+    public ModelAndView manageCustomersPage(Model model) {
         // Set some value of attributes for modal appear
         model.addAttribute("saveResponse", -2);
         model.addAttribute("updateResponse", -2);
@@ -73,12 +77,16 @@ public class AdminController {
         model.addAttribute("loginResponse", -2);
 
         model.addAttribute("customers", customerService.findAll());
-        return "admin/find-customer";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/find-customer");
+
+        return modelAndView;
     }
 
     // Page of Manage Restaurants
     @GetMapping("/api/admin/restaurants")
-    public String manageRestaurantsPage(Model model) {
+    public ModelAndView manageRestaurantsPage(Model model) {
         // Set some value of attributes for modal appear
         model.addAttribute("saveResponse", -2);
         model.addAttribute("updateResponse", -2);
@@ -86,12 +94,16 @@ public class AdminController {
         model.addAttribute("loginResponse", -2);
 
         model.addAttribute("restaurants", restaurantService.findAll());
-        return "admin/find-restaurant";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/find-restaurant");
+
+        return modelAndView;
     }
 
     // Page of Create Administrators
     @GetMapping("/api/admin/create-admin")
-    public String createAdminPage(Model model) {
+    public ModelAndView createAdminPage(Model model) {
         // Add object for form
         model.addAttribute("admin", new Admin());
 
@@ -106,13 +118,16 @@ public class AdminController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/save-admin");
+
         // Return the page
-        return "admin/save-admin";
+        return modelAndView;
     }
 
     // Page of Update Administrators
     @GetMapping("/api/admin/update-admin/{email}")
-    public String updateAdminPage(Model model, @PathVariable String email) {
+    public ModelAndView updateAdminPage(Model model, @PathVariable String email) {
         model.addAttribute("admin", adminService.findByEmail(email));
         String modalId = "modal";
         String modalContent = "Update Admin successfully";
@@ -123,12 +138,16 @@ public class AdminController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "admin/edit-admin";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/edit-admin");
+
+        return modelAndView;
     }
 
     // Page of Create Customers
     @GetMapping("/api/admin/create-customer")
-    public String saveCustomerPage(Model model) {
+    public ModelAndView saveCustomerPage(Model model) {
         // Add object for form
         model.addAttribute("customer", new Customer());
 
@@ -143,13 +162,16 @@ public class AdminController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/save-customer");
+
         // Return the page
-        return "admin/save-customer";
+        return modelAndView;
     }
 
     // Page of Update Customer
     @GetMapping("/api/admin/update-customer/{email}")
-    public String updateCustomerPage(Model model, @PathVariable String email) {
+    public ModelAndView updateCustomerPage(Model model, @PathVariable String email) {
         model.addAttribute("customer", customerService.findByEmail(email));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
@@ -160,12 +182,16 @@ public class AdminController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "admin/edit-customer";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/edit-customer");
+
+        return modelAndView;
     }
 
     // Page of Create Restaurant
     @GetMapping("/api/admin/create-restaurant")
-    public String saveRestaurantPage(Model model) {
+    public ModelAndView saveRestaurantPage(Model model) {
         // Add object for form
         model.addAttribute("restaurant", new Restaurant());
 
@@ -180,13 +206,16 @@ public class AdminController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/save-restaurant");
+
         // Return the page
-        return "admin/save-restaurant";
+        return modelAndView;
     }
 
     // Page of Update Restaurant
     @GetMapping("/api/admin/update-restaurant/{username}")
-    public String updateRestaurantPage(Model model, @PathVariable String username) {
+    public ModelAndView updateRestaurantPage(Model model, @PathVariable String username) {
         model.addAttribute("restaurant", restaurantService.findByUsername(username));
         String modalId = "modal";
         String modalContent = "Update Restaurant successfully";
@@ -197,12 +226,16 @@ public class AdminController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "admin/edit-restaurant";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/edit-restaurant");
+
+        return modelAndView;
     }
 
     // Page of Login
     @GetMapping("/api/admin/login")
-    public String loginPage(Model model) {
+    public ModelAndView loginPage(Model model) {
         String modalContent = "Login successfully";
         String modalId = "modal";
 
@@ -221,9 +254,12 @@ public class AdminController {
             model.addAttribute("modalContent", modalContent);
         }
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/login");
+
         model.addAttribute("loginResponse", null);
 
-        return "admin/login";
+        return modelAndView;
     }
 
     /////////////////////////// Create //////////////////////////////

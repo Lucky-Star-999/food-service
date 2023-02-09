@@ -52,7 +52,7 @@ public class RestaurantController {
 
     /////////////////////////// Read //////////////////////////////
     @GetMapping("/api/restaurant/login")
-    public String loginPage(Model model) {
+    public ModelAndView loginPage(Model model) {
         String modalContent = "Login successfully";
         String modalId = "modal";
 
@@ -71,14 +71,17 @@ public class RestaurantController {
             model.addAttribute("modalContent", modalContent);
         }
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/login");
+
         model.addAttribute("loginResponse", null);
 
-        return "restaurant/login";
+        return modelAndView;
     }
 
     // Page of Create Restaurant (Register)
     @GetMapping("/api/restaurant/register")
-    public String saveRestaurantPage(Model model) {
+    public ModelAndView saveRestaurantPage(Model model) {
         // Add object for form
         model.addAttribute("restaurant", new Restaurant());
 
@@ -98,13 +101,16 @@ public class RestaurantController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/save-restaurant");
+
         // Return the page
-        return "restaurant/save-restaurant";
+        return modelAndView;
     }
 
     // Page of Update Restaurant (Profile)
     @GetMapping("/api/restaurant/profile")
-    public String updateRestaurantPage(Model model) {
+    public ModelAndView updateRestaurantPage(Model model) {
         model.addAttribute("restaurant", restaurantService.findByUsername((String) model.getAttribute("username")));
         String modalId = "modal";
         String modalContent = "Update Restaurant successfully";
@@ -115,11 +121,15 @@ public class RestaurantController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "restaurant/profile";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/profile");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/restaurant/create-food")
-    public String createFoodPage(Model model) {
+    public ModelAndView createFoodPage(Model model) {
         model.addAttribute("food", new Food());
         String modalId = "modal";
         String modalContent = "Update Food successfully";
@@ -130,11 +140,15 @@ public class RestaurantController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "restaurant/create-food";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/create-food");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/restaurant/update-food/{id}")
-    public String updateFoodPage(Model model, @PathVariable String id) {
+    public ModelAndView updateFoodPage(Model model, @PathVariable String id) {
         model.addAttribute("food", foodService.findById(id));
         String modalId = "modal";
         String modalContent = "Update Food successfully";
@@ -145,20 +159,32 @@ public class RestaurantController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "restaurant/edit-food";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/edit-food");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/restaurant/orders")
-    public String ordersPage(Model model) {
+    public ModelAndView ordersPage(Model model) {
         model.addAttribute("orders", serviceOrderService.find());
-        return "restaurant/orders";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/orders");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/restaurant/order/{orderId}")
-    public String orderDetailPage(Model model, @PathVariable String orderId) {
+    public ModelAndView orderDetailPage(Model model, @PathVariable String orderId) {
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
-        return "restaurant/order-detail";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/order-detail");
+
+        return modelAndView;
     }
 
 
