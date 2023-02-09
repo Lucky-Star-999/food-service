@@ -66,7 +66,10 @@ public class CustomerController {
     /////////////////////////// Read //////////////////////////////
     // Page of Login
     @GetMapping("/api/customer/login")
-    public String loginPage(Model model) {
+    public ModelAndView loginPage(Model model) {
+
+
+
         String modalContent = "Login successfully";
         String modalId = "modal";
 
@@ -85,22 +88,30 @@ public class CustomerController {
             model.addAttribute("modalContent", modalContent);
         }
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/login");
+
         model.addAttribute("loginResponse", null);
 
-        return "customer/login";
+
+
+        return modelAndView;
     }
 
     @GetMapping("/api/customer/restaurant/{username}")
-    public String restaurantPage(Model model, @PathVariable String username) {
+    public ModelAndView restaurantPage(Model model, @PathVariable String username) {
         model.addAttribute("restaurant", restaurantService.findByUsername(username));
         model.addAttribute("foods", foodService.findByRestaurantUsername(username));
 
-        return "customer/restaurant";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/restaurant");
+
+        return modelAndView;
     }
 
     // Page of Create Customers (Register)
     @GetMapping("/api/customer/register")
-    public String saveCustomerPage(Model model) {
+    public ModelAndView saveCustomerPage(Model model) {
         // Add object for form
         model.addAttribute("customer", new Customer());
 
@@ -120,14 +131,17 @@ public class CustomerController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/save-customer");
+
         // Return the page
-        return "customer/save-customer";
+        return modelAndView;
     }
 
 
     // Page of Update Customer (Profile)
     @GetMapping("/api/customer/profile")
-    public String updateCustomerPage(Model model) {
+    public ModelAndView updateCustomerPage(Model model) {
         model.addAttribute("customer", customerService.findByEmail((String) model.getAttribute("customerEmail")));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
@@ -138,28 +152,44 @@ public class CustomerController {
         }
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
-        return "customer/profile";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/profile");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/customer/orders")
-    public String ordersPage(Model model) {
+    public ModelAndView ordersPage(Model model) {
         model.addAttribute("orders", serviceOrderService.find());
-        return "customer/orders";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/orders");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/customer/order-confirm/{orderId}")
-    public String orderConfirmPage(Model model, @PathVariable String orderId) {
+    public ModelAndView orderConfirmPage(Model model, @PathVariable String orderId) {
         List<OrderDetailDto> orderDetailDtos = orderDetailService.findByOrderId(orderId);
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailDtos);
-        return "customer/order-confirm";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/order-confirm");
+
+        return modelAndView;
     }
 
     @GetMapping("/api/customer/order/{orderId}")
-    public String orderDetailPage(Model model, @PathVariable String orderId) {
+    public ModelAndView orderDetailPage(Model model, @PathVariable String orderId) {
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
-        return "customer/order-detail";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/order-detail");
+
+        return modelAndView;
     }
 
 
