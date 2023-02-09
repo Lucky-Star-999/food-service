@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/restaurant/orders">Orders</a>
+                            <a class="nav-link" href="/api/customer/orders">Orders</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)">Care Service</a>
@@ -36,14 +36,14 @@
                     <div class="d-flex">
                         <div class="dropdown">
                             <button type="button" class="btn btn-link dropdown-toggle text-decoration-none"
-                                    data-bs-toggle="dropdown" th:utext="${username}">
+                                    data-bs-toggle="dropdown" th:utext="${customerEmail}">
                                 Dropdown button
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/api/restaurant/profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="/api/customer/profile">Profile</a></li>
                                 <div class="dropdown-divider"></div>
                                 <li>
-                                    <a href="/api/restaurant/logout" class="dropdown-item text-danger">Logout</a>
+                                    <a href="/api/customer/logout" class="dropdown-item text-danger">Logout</a>
                                 </li>
                             </ul>
                         </div>
@@ -60,7 +60,7 @@
                 <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Customer Email</th>
+                    <th>Restaurant Name</th>
                     <th>Created Date</th>
                     <th></th>
                 </tr>
@@ -68,10 +68,10 @@
                 <tbody>
                 <tr th:each="order: ${orders}">
                     <td th:utext="${order.id}"></td>
-                    <td th:utext="${order.customerEmail}"></td>
+                    <td th:utext="${order.restaurantName}"></td>
                     <td th:utext="${order.createdDate}"></td>
                     <td>
-                        <a th:href="@{|/api/restaurant/order/${order.id}}|"
+                        <a th:href="@{|/api/customer/order/${order.id}}|"
                            class="btn btn-success">Detail</a>
                     </td>
                 </tr>

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("")
-@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "email"})
+@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "customerEmail"})
 @Controller
 public class CustomerController {
 
@@ -47,7 +47,7 @@ public class CustomerController {
         model.addAttribute("loginResponse", -2);
 
         // Exit to login page if not login yet
-        if (model.getAttribute("email") == null) {
+        if (model.getAttribute("customerEmail") == null) {
             return new ModelAndView("redirect:/api/customer/login");
         }
 
@@ -128,7 +128,7 @@ public class CustomerController {
     // Page of Update Customer (Profile)
     @GetMapping("/api/customer/profile")
     public String updateCustomerPage(Model model) {
-        model.addAttribute("customer", customerService.findByEmail((String) model.getAttribute("email")));
+        model.addAttribute("customer", customerService.findByEmail((String) model.getAttribute("customerEmail")));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
         if ((int) model.getAttribute("updateResponse") == -2) {
@@ -184,7 +184,7 @@ public class CustomerController {
         String uniqueID = UUID.randomUUID().toString();
 
         serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername, restaurantName,
-                (String) model.getAttribute("email"), null));
+                (String) model.getAttribute("customerEmail"), null));
 
         for (int i = 0; i < foodIdList.size(); i++) {
             orderFoodService.save(new OrderFood(uniqueID, foodIdList.get(i),
@@ -225,7 +225,7 @@ public class CustomerController {
         model.addAttribute("loginResponse", response);
 
         if (response == 1) {
-            model.addAttribute("email", email);
+            model.addAttribute("customerEmail", email);
             return new ModelAndView("redirect:/api/customer");
         }
         return new ModelAndView("redirect:/api/customer/login");

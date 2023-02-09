@@ -36,7 +36,7 @@
                     <div class="d-flex">
                         <div class="dropdown">
                             <button type="button" class="btn btn-link dropdown-toggle text-decoration-none"
-                                    data-bs-toggle="dropdown" th:utext="${email}">
+                                    data-bs-toggle="dropdown" th:utext="${customerEmail}">
                                 Dropdown button
                             </button>
                             <ul class="dropdown-menu">
@@ -85,7 +85,8 @@
             <h2 class="mt-5 mb-3">Your order</h2>
             <h5 class="mb-3">Total: <span id="total"></span></h5>
             <form method="post" th:action="@{/api/customer/order}" th:object="${foodList}">
-                <input type="text" name="restaurantUsername" th:value="${restaurant.username}" field="restaurantUsername"
+                <input type="text" name="restaurantUsername" th:value="${restaurant.username}"
+                       field="restaurantUsername"
                        hidden>
                 <input type="text" name="restaurantName" th:value="${restaurant.name}" field="restaurantName"
                        hidden>
@@ -203,6 +204,7 @@
                 $(row).find('.price')[0].innerHTML
             )
         }
+
 
 
 </script>
