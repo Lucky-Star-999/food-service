@@ -111,6 +111,10 @@ public class RestaurantController {
     // Page of Update Restaurant (Profile)
     @GetMapping("/api/restaurant/profile")
     public ModelAndView updateRestaurantPage(Model model) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("restaurant", restaurantService.findByUsername((String) model.getAttribute("username")));
         String modalId = "modal";
         String modalContent = "Update Restaurant successfully";
@@ -130,6 +134,10 @@ public class RestaurantController {
 
     @GetMapping("/api/restaurant/create-food")
     public ModelAndView createFoodPage(Model model) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("food", new Food());
         String modalId = "modal";
         String modalContent = "Update Food successfully";
@@ -149,6 +157,10 @@ public class RestaurantController {
 
     @GetMapping("/api/restaurant/update-food/{id}")
     public ModelAndView updateFoodPage(Model model, @PathVariable String id) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("food", foodService.findById(id));
         String modalId = "modal";
         String modalContent = "Update Food successfully";
@@ -168,6 +180,10 @@ public class RestaurantController {
 
     @GetMapping("/api/restaurant/orders")
     public ModelAndView ordersPage(Model model) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("orders", serviceOrderService.find());
 
         ModelAndView modelAndView = new ModelAndView();
@@ -178,6 +194,10 @@ public class RestaurantController {
 
     @GetMapping("/api/restaurant/order/{orderId}")
     public ModelAndView orderDetailPage(Model model, @PathVariable String orderId) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
 
@@ -198,6 +218,10 @@ public class RestaurantController {
 
     @PostMapping("/api/restaurant/food")
     public ModelAndView saveFood(Model model, @ModelAttribute Food food) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("food", new Food());
         food.setRestaurantUsername((String)model.getAttribute("username"));
         model.addAttribute("saveResponse", foodService.save(food));
@@ -208,13 +232,21 @@ public class RestaurantController {
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/restaurant/restaurant")
     public ModelAndView updateCustomer(Model model, @ModelAttribute Restaurant restaurant) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("customer", new Restaurant());
         model.addAttribute("updateResponse", restaurantService.update(restaurant));
         return new ModelAndView("redirect:/api/restaurant/profile");
     }
 
     @PutMapping("/api/restaurant/food")
-    public ModelAndView update(Model model, @ModelAttribute Food food) {
+    public ModelAndView updateFood(Model model, @ModelAttribute Food food) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("food", new Food());
         model.addAttribute("updateResponse", foodService.update(food));
         return new ModelAndView("redirect:/api/restaurant/update-food/" + food.getId());
@@ -225,6 +257,10 @@ public class RestaurantController {
     @DeleteMapping("api/restaurant/restaurant/{username}")
     public ModelAndView delete(Model model, @PathVariable String username,
                                HttpSession httpsession, SessionStatus status) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
         model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("deleteResponse", restaurantService.delete(username));
         status.setComplete();

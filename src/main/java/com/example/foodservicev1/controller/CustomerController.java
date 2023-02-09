@@ -100,6 +100,11 @@ public class CustomerController {
 
     @GetMapping("/api/customer/restaurant/{username}")
     public ModelAndView restaurantPage(Model model, @PathVariable String username) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("restaurant", restaurantService.findByUsername(username));
         model.addAttribute("foods", foodService.findByRestaurantUsername(username));
 
@@ -142,6 +147,11 @@ public class CustomerController {
     // Page of Update Customer (Profile)
     @GetMapping("/api/customer/profile")
     public ModelAndView updateCustomerPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("customer", customerService.findByEmail((String) model.getAttribute("customerEmail")));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
@@ -161,6 +171,11 @@ public class CustomerController {
 
     @GetMapping("/api/customer/orders")
     public ModelAndView ordersPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("orders", serviceOrderService.find());
 
         ModelAndView modelAndView = new ModelAndView();
@@ -171,6 +186,11 @@ public class CustomerController {
 
     @GetMapping("/api/customer/order-confirm/{orderId}")
     public ModelAndView orderConfirmPage(Model model, @PathVariable String orderId) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         List<OrderDetailDto> orderDetailDtos = orderDetailService.findByOrderId(orderId);
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailDtos);
@@ -183,6 +203,11 @@ public class CustomerController {
 
     @GetMapping("/api/customer/order/{orderId}")
     public ModelAndView orderDetailPage(Model model, @PathVariable String orderId) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
 
@@ -211,6 +236,11 @@ public class CustomerController {
                                  @RequestParam String restaurantUsername,
                                  @RequestParam String restaurantName) {
 
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         String uniqueID = UUID.randomUUID().toString();
 
         serviceOrderService.save(new ServiceOrder(uniqueID, restaurantUsername, restaurantName,
@@ -230,6 +260,11 @@ public class CustomerController {
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/customer/customer")
     public ModelAndView updateCustomer(Model model, @ModelAttribute Customer customer) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("customer", new Customer());
         model.addAttribute("updateResponse", customerService.update(customer));
         return new ModelAndView("redirect:/api/customer/profile");
@@ -239,6 +274,11 @@ public class CustomerController {
     /////////////////////////// Delete //////////////////////////////
     @DeleteMapping("api/customer/customer/{email}")
     public ModelAndView delete(Model model, @PathVariable String email, HttpSession httpsession, SessionStatus status) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
         model.addAttribute("admin", new Admin());
         model.addAttribute("deleteResponse", customerService.delete(email));
         status.setComplete();

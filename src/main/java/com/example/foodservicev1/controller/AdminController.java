@@ -59,6 +59,11 @@ public class AdminController {
         model.addAttribute("deleteResponse", -2);
         model.addAttribute("loginResponse", -2);
 
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("admins", adminService.findAll());
 
         ModelAndView modelAndView = new ModelAndView();
@@ -78,6 +83,11 @@ public class AdminController {
 
         model.addAttribute("customers", customerService.findAll());
 
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/find-customer");
 
@@ -93,6 +103,11 @@ public class AdminController {
         model.addAttribute("deleteResponse", -2);
         model.addAttribute("loginResponse", -2);
 
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("restaurants", restaurantService.findAll());
 
         ModelAndView modelAndView = new ModelAndView();
@@ -104,6 +119,11 @@ public class AdminController {
     // Page of Create Administrators
     @GetMapping("/api/admin/create-admin")
     public ModelAndView createAdminPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         // Add object for form
         model.addAttribute("admin", new Admin());
 
@@ -128,6 +148,11 @@ public class AdminController {
     // Page of Update Administrators
     @GetMapping("/api/admin/update-admin/{email}")
     public ModelAndView updateAdminPage(Model model, @PathVariable String email) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("admin", adminService.findByEmail(email));
         String modalId = "modal";
         String modalContent = "Update Admin successfully";
@@ -148,6 +173,11 @@ public class AdminController {
     // Page of Create Customers
     @GetMapping("/api/admin/create-customer")
     public ModelAndView saveCustomerPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         // Add object for form
         model.addAttribute("customer", new Customer());
 
@@ -172,6 +202,11 @@ public class AdminController {
     // Page of Update Customer
     @GetMapping("/api/admin/update-customer/{email}")
     public ModelAndView updateCustomerPage(Model model, @PathVariable String email) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("customer", customerService.findByEmail(email));
         String modalId = "modal";
         String modalContent = "Update Customer successfully";
@@ -192,6 +227,11 @@ public class AdminController {
     // Page of Create Restaurant
     @GetMapping("/api/admin/create-restaurant")
     public ModelAndView saveRestaurantPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         // Add object for form
         model.addAttribute("restaurant", new Restaurant());
 
@@ -216,6 +256,11 @@ public class AdminController {
     // Page of Update Restaurant
     @GetMapping("/api/admin/update-restaurant/{username}")
     public ModelAndView updateRestaurantPage(Model model, @PathVariable String username) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("restaurant", restaurantService.findByUsername(username));
         String modalId = "modal";
         String modalContent = "Update Restaurant successfully";
@@ -265,6 +310,11 @@ public class AdminController {
     /////////////////////////// Create //////////////////////////////
     @PostMapping("/api/admin/admin")
     public ModelAndView save(Model model, @ModelAttribute Admin admin) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("admin", new Admin());
         model.addAttribute("saveResponse", adminService.save(admin));
         return new ModelAndView("redirect:/api/admin/create-admin");
@@ -272,6 +322,11 @@ public class AdminController {
 
     @PostMapping("/api/admin/customer")
     public ModelAndView saveCustomer(Model model, @ModelAttribute Customer customer) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("customer", new Customer());
         model.addAttribute("saveResponse", customerService.save(customer));
         return new ModelAndView("redirect:/api/admin/create-customer");
@@ -279,6 +334,11 @@ public class AdminController {
 
     @PostMapping("/api/admin/restaurant")
     public ModelAndView saveRestaurant(Model model, @ModelAttribute Restaurant restaurant) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("saveResponse", restaurantService.save(restaurant));
         return new ModelAndView("redirect:/api/admin/create-restaurant");
@@ -287,6 +347,11 @@ public class AdminController {
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/admin/admin")
     public ModelAndView updateAdmin(Model model, @ModelAttribute Admin admin) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("admin", new Admin());
         model.addAttribute("updateResponse", adminService.update(admin));
         return new ModelAndView("redirect:/api/admin/update-admin/" + admin.getEmail());
@@ -294,6 +359,11 @@ public class AdminController {
 
     @PutMapping("/api/admin/customer")
     public ModelAndView updateCustomer(Model model, @ModelAttribute Customer customer) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("customer", new Customer());
         model.addAttribute("updateResponse", customerService.update(customer));
         return new ModelAndView("redirect:/api/admin/update-customer/" + customer.getEmail());
@@ -301,6 +371,11 @@ public class AdminController {
 
     @PutMapping("/api/admin/restaurant")
     public ModelAndView updateRestaurant(Model model, @ModelAttribute Restaurant restaurant) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("updateResponse", restaurantService.update(restaurant));
         return new ModelAndView("redirect:/api/admin/update-restaurant/" + restaurant.getUsername());
@@ -309,6 +384,11 @@ public class AdminController {
     /////////////////////////// Delete //////////////////////////////
     @DeleteMapping("api/admin/admin/{email}")
     public ModelAndView delete(Model model, @PathVariable String email, HttpSession httpsession, SessionStatus status) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("admin", new Admin());
         model.addAttribute("deleteResponse", adminService.delete(email));
         if (model.getAttribute("email").equals(email)) {
@@ -325,6 +405,11 @@ public class AdminController {
     @DeleteMapping("api/admin/customer/{email}")
     public ModelAndView deleteCustomer(Model model, @PathVariable String email,
                                        HttpSession httpsession, SessionStatus status) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("customer", new Customer());
         model.addAttribute("deleteResponse", customerService.delete(email));
         return new ModelAndView("redirect:/api/admin/customers");
@@ -333,6 +418,11 @@ public class AdminController {
     @DeleteMapping("api/admin/restaurant/{username}")
     public ModelAndView deleteRestaurant(Model model, @PathVariable String username,
                                        HttpSession httpsession, SessionStatus status) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/api/admin/login");
+        }
+
         model.addAttribute("restaurant", new Restaurant());
         model.addAttribute("deleteResponse", restaurantService.delete(username));
         return new ModelAndView("redirect:/api/admin/restaurants");
