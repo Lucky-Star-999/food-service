@@ -295,7 +295,11 @@ public class AdminController {
             } else if (response == 0) {
                 modalContent = "Wrong password!";
             } else {
-                modalId = "notModal";
+                if (model.getAttribute("email") != null) {
+                    return new ModelAndView("redirect:/api/admin");
+                } else {
+                    modalId = "notModal";
+                }
             }
             model.addAttribute("modalId", modalId);
             model.addAttribute("modalContent", modalContent);

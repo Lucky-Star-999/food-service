@@ -67,7 +67,11 @@ public class RestaurantController {
             } else if (response == 0) {
                 modalContent = "Wrong password!";
             } else {
-                modalId = "notModal";
+                if (model.getAttribute("username") != null) {
+                    return new ModelAndView("redirect:/api/restaurant");
+                } else {
+                    modalId = "notModal";
+                }
             }
             model.addAttribute("modalId", modalId);
             model.addAttribute("modalContent", modalContent);

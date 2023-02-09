@@ -84,7 +84,11 @@ public class CustomerController {
             } else if (response == 0) {
                 modalContent = "Wrong password!";
             } else {
-                modalId = "notModal";
+                if (model.getAttribute("customerEmail") != null) {
+                    return new ModelAndView("redirect:/api/customer");
+                } else {
+                    modalId = "notModal";
+                }
             }
             model.addAttribute("modalId", modalId);
             model.addAttribute("modalContent", modalContent);
