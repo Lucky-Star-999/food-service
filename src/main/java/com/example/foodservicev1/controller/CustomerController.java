@@ -83,6 +83,8 @@ public class CustomerController {
                 modalContent = "The email does not exist!";
             } else if (response == 0) {
                 modalContent = "Wrong password!";
+            } else {
+                modalId = "notModal";
             }
             model.addAttribute("modalId", modalId);
             model.addAttribute("modalContent", modalContent);
