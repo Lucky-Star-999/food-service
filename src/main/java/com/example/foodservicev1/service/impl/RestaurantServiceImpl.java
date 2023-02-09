@@ -1,6 +1,7 @@
 package com.example.foodservicev1.service.impl;
 
 import com.example.foodservicev1.entity.Restaurant;
+import com.example.foodservicev1.repository.FoodRepository;
 import com.example.foodservicev1.repository.RestaurantRepository;
 import com.example.foodservicev1.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private FoodRepository foodRepository;
 
     @Override
     public List<Restaurant> findAll() {
@@ -32,6 +36,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public int delete(String username) {
+        foodRepository.deleteByRestaurantUsername(username);
         return restaurantRepository.delete(username);
     }
 
