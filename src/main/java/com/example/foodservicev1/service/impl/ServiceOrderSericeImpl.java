@@ -15,6 +15,11 @@ public class ServiceOrderSericeImpl implements ServiceOrderService {
     private ServiceOrderRepository serviceOrderRepository;
 
     @Override
+    public List<ServiceOrder> find() {
+        return serviceOrderRepository.find();
+    }
+
+    @Override
     public List<ServiceOrder> findByRestaurantUsername(String restaurantUsername) {
         return serviceOrderRepository.findByRestaurantUsername(restaurantUsername);
     }

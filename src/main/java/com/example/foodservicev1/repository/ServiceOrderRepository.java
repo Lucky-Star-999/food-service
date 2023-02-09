@@ -7,6 +7,7 @@ import java.util.List;
 
 @Repository
 public interface ServiceOrderRepository {
+    public List<ServiceOrder> find();
     public List<ServiceOrder> findByRestaurantUsername(String restaurantUsername);
     public List<ServiceOrder> findByCustomerEmail(String customerEmail);
     public ServiceOrder findById(String id);

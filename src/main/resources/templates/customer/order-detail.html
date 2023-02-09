@@ -68,18 +68,18 @@
                 </tr>
                 </thead>
                 <tbody id="food-rows">
-                <tr th:each="orderDetailDto: ${orderDetailDtos}">
-                    <td th:utext="${orderDetailDto.restaurantName}"></td>
-                    <td th:utext="${orderDetailDto.foodName}"></td>
-                    <td th:utext="${orderDetailDto.price}" class="price"></td>
-                    <td th:utext="${orderDetailDto.quantity}" class="quantity"></td>
-                    <td th:utext="${orderDetailDto.createdDate}"></td>
-                </tr>
+                    <tr th:each="orderDetailDto: ${orderDetailDtos}">
+                        <td th:utext="${orderDetailDto.restaurantName}"></td>
+                        <td th:utext="${orderDetailDto.foodName}"></td>
+                        <td th:utext="${orderDetailDto.price}" class="price"></td>
+                        <td th:utext="${orderDetailDto.quantity}" class="quantity"></td>
+                        <td th:utext="${orderDetailDto.createdDate}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="mt-5">
-            <a href="/api/customer" type="button" class="btn btn-success">Back</a>
+            <a href="/api/customer/orders" type="button" class="btn btn-success">Back</a>
         </div>
     </main>
 

@@ -141,12 +141,25 @@ public class CustomerController {
         return "customer/profile";
     }
 
+    @GetMapping("/api/customer/orders")
+    public String ordersPage(Model model) {
+        model.addAttribute("orders", serviceOrderService.find());
+        return "customer/orders";
+    }
+
     @GetMapping("/api/customer/order-confirm/{orderId}")
     public String orderConfirmPage(Model model, @PathVariable String orderId) {
         List<OrderDetailDto> orderDetailDtos = orderDetailService.findByOrderId(orderId);
         model.addAttribute("orderID", orderId);
         model.addAttribute("orderDetailDtos", orderDetailDtos);
         return "customer/order-confirm";
+    }
+
+    @GetMapping("/api/customer/order/{orderId}")
+    public String orderDetailPage(Model model, @PathVariable String orderId) {
+        model.addAttribute("orderID", orderId);
+        model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
+        return "customer/order-detail";
     }
 
 

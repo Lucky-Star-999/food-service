@@ -16,6 +16,15 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    public List<ServiceOrder> find() {
+        try {
+            return jdbcTemplate.query("SELECT * FROM SERVICEORDER", new ServiceOrderRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<ServiceOrder> findByRestaurantUsername(String restaurantUsername) {
         try {
             return jdbcTemplate.query("SELECT * FROM SERVICEORDER WHERE RestaurantUsername = ?",
