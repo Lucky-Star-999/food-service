@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer - Login</title>
+    <title th:utext="#{customer.login.title}">Customer - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -16,21 +16,21 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Customer - Login</h1>
+        <h1 th:utext="#{customer.login.header}">Customer - Login</h1>
         <form action="/api/customer/login" th:method="POST">
             <div class="mb-3 mt-3">
-                <label for="email" class="form-label">Email:</label>
+                <label for="email" class="form-label" th:utext="#{customer.login.email}">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email"
                        field="email" name="email">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
+                <label for="password" class="form-label" th:utext="#{customer.login.password}">Password:</label>
                 <input type="password" class="form-control" id="password" placeholder="Enter password"
                        field="password" name="password">
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="/api/customer/register" type="button" class="btn btn-warning ms-5">Register</a>
-            <a href="/" type="button" class="btn btn-secondary ms-5">Back</a>
+            <button type="submit" class="btn btn-primary" th:utext="#{customer.login.login}">Login</button>
+            <a href="/api/customer/register" type="button" class="btn btn-warning ms-5" th:utext="#{customer.login.register}">Register</a>
+            <a href="/" type="button" class="btn btn-secondary ms-5" th:utext="#{customer.login.back}">Back</a>
         </form>
     </div>
 
