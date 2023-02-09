@@ -5,7 +5,9 @@ import com.example.foodservicev1.entity.Customer;
 import com.example.foodservicev1.entity.Food;
 import com.example.foodservicev1.entity.Restaurant;
 import com.example.foodservicev1.service.FoodService;
+import com.example.foodservicev1.service.OrderDetailService;
 import com.example.foodservicev1.service.RestaurantService;
+import com.example.foodservicev1.service.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,12 @@ public class RestaurantController {
 
     @Autowired
     private FoodService foodService;
+
+    @Autowired
+    private ServiceOrderService serviceOrderService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/restaurant")
@@ -138,6 +146,19 @@ public class RestaurantController {
         model.addAttribute("modalId", modalId);
         model.addAttribute("modalContent", modalContent);
         return "restaurant/edit-food";
+    }
+
+    @GetMapping("/api/restaurant/orders")
+    public String ordersPage(Model model) {
+        model.addAttribute("orders", serviceOrderService.find());
+        return "restaurant/orders";
+    }
+
+    @GetMapping("/api/restaurant/order/{orderId}")
+    public String orderDetailPage(Model model, @PathVariable String orderId) {
+        model.addAttribute("orderID", orderId);
+        model.addAttribute("orderDetailDtos", orderDetailService.findByOrderId(orderId));
+        return "restaurant/order-detail";
     }
 
 
