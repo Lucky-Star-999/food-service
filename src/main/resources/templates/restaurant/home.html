@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant - Homepage</title>
+    <title th:utext="#{restaurant.home.title}">Restaurant - Homepage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -54,16 +54,16 @@
     </header>
 
     <main class="mt-5">
-        <h1>Welcome, <span th:utext="${username}"></span></h1>
+        <h1><span th:utext="#{restaurant.home.header}">Welcome, </span><span th:utext="${username}"></span></h1>
         <div class="mt-5">
             <table id="example" class="table table-striped table-hover align-middle" style="width:100%">
                 <thead>
                 <tr>
-                    <th>Food ID</th>
-                    <th>Food name</th>
-                    <th>Price</th>
+                    <th th:utext="#{restaurant.home.id}">Food ID</th>
+                    <th th:utext="#{restaurant.home.name}">Food name</th>
+                    <th th:utext="#{restaurant.home.price}">Price</th>
                     <!--<th>Quantity Sold</th>-->
-                    <th>Image Link</th>
+                    <th th:utext="#{restaurant.home.image-link}">Image Link</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -74,19 +74,22 @@
                     <td th:utext="${food.price}"></td>
                     <!--<td th:utext="${food.quantity}"></td>-->
                     <td>
-                        <a th:href="${food.imageLink}|" target="_blank" class="btn btn-success">Image</a>
+                        <a th:href="${food.imageLink}|" target="_blank" class="btn btn-success"
+                           th:utext="#{restaurant.home.image}">Image</a>
                     </td>
                     <td>
                         <a th:href="@{|/api/restaurant/update-food/${food.id}|}"
-                           class="btn btn-success">Edit</a>
+                           class="btn btn-success" th:utext="#{restaurant.home.edit}">Edit</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
         <div class="mt-5">
-            <a href="/api/restaurant/create-food" type="button" class="btn btn-primary">Add Food</a>
-            <a href="/api/restaurant/logout" type="button" class="btn btn-danger ms-5">Logout</a>
+            <a href="/api/restaurant/create-food" type="button" class="btn btn-primary"
+               th:utext="#{restaurant.home.add-food}">Add Food</a>
+            <a href="/api/restaurant/logout" type="button" class="btn btn-danger ms-5"
+               th:utext="#{restaurant.home.logout}">Logout</a>
         </div>
     </main>
 
@@ -101,6 +104,7 @@
         $(document).ready(function () {
             $('#example').DataTable();
         });
+
 
 </script>
 </body>
