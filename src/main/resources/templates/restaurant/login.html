@@ -15,6 +15,22 @@
 </head>
 
 <body>
+<header>
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=en" th:utext="#{lang.en}">English</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=vi" th:utext="#{lang.vi}">Vietnamese</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 <div class="container mt-5">
     <h1 th:utext="#{restaurant.login.header}">Login</h1>
     <form action="/api/restaurant/login" th:method="POST">
